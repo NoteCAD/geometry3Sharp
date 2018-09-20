@@ -29,7 +29,7 @@ namespace g3
         int bins_x, bins_y;
         AxisAlignedBox2i grid_bounds;
 
-        SpinLock spinlock;
+        //SpinLock spinlock;
 
         /// <summary>
         /// "invalid" value will be returned by queries if no valid result is found (eg bounded-distance query)
@@ -141,9 +141,9 @@ namespace g3
 
         void insert_triangle(int triangle_id, ref Vector2d a, ref Vector2d b, ref Vector2d c, bool threadsafe = true)
         {
-            bool lockTaken = false;
-            while (threadsafe == true && lockTaken == false)
-                spinlock.Enter(ref lockTaken);
+            //bool lockTaken = false;
+            //while (threadsafe == true && lockTaken == false)
+            //    spinlock.Enter(ref lockTaken);
 
             // [TODO] actually want to conservatively rasterize triangles here, not just
             // store in every cell in bbox!
@@ -162,16 +162,16 @@ namespace g3
                 }
             }
 
-            if (lockTaken)
-                spinlock.Exit();
+            //if (lockTaken)
+            //    spinlock.Exit();
         }
 
 
         void remove_triangle(int triangle_id, ref Vector2d a, ref Vector2d b, ref Vector2d c, bool threadsafe = true)
         {
-            bool lockTaken = false;
-            while (threadsafe == true && lockTaken == false)
-                spinlock.Enter(ref lockTaken);
+            //bool lockTaken = false;
+            //while (threadsafe == true && lockTaken == false)
+            //    spinlock.Enter(ref lockTaken);
 
             AxisAlignedBox2d bounds = BoundsUtil.Bounds(ref a, ref b, ref c);
             Vector2i imin = indexer.ToGrid(bounds.Min);
@@ -183,8 +183,8 @@ namespace g3
                 }
             }
 
-            if (lockTaken)
-                spinlock.Exit();
+            //if (lockTaken)
+             //   spinlock.Exit();
         }
     }
 }

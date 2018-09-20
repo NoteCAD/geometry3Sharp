@@ -82,10 +82,10 @@ namespace g3
             int remainingWorkItems = numProcs;
             Exception last_exception = null;
             using (var enumerator = source.GetEnumerator()) {
-                using (ManualResetEvent mre = new ManualResetEvent(false)) {
+                //using (ManualResetEvent mre = new ManualResetEvent(false)) {
                     // Create each of the work items.
-                    for (int p = 0; p < numProcs; p++) {
-                        ThreadPool.QueueUserWorkItem(delegate {
+                    //for (int p = 0; p < numProcs; p++) {
+                        //ThreadPool.QueueUserWorkItem(delegate {
                             // Iterate until there's no more work.
                             while (true) {
                                 // Get the next item under a lock,
@@ -108,14 +108,14 @@ namespace g3
                                     break;
                                 }
                             }
-                            if (Interlocked.Decrement(ref remainingWorkItems) == 0)
-                                mre.Set();
-                        });
-                    }
+                            //if (Interlocked.Decrement(ref remainingWorkItems) == 0)
+                              //  mre.Set();
+                        //});
+                    //}
                     // Wait for all threads to complete.
-                    mre.WaitOne();
+                    //mre.WaitOne();
                 }
-            }
+            //}
 
             // pass on last exception thrown by enumerables
             if (last_exception != null)

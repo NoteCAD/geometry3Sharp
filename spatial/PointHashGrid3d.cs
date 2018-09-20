@@ -26,7 +26,7 @@ namespace g3
         ScaleGridIndexer3 Indexer;
         T invalidValue;
 
-        SpinLock spinlock;
+        //SpinLock spinlock;
 
         /// <summary>
         /// "invalid" value will be returned by queries if no valid result is found (eg bounded-distance query)
@@ -35,7 +35,7 @@ namespace g3
         {
             Hash = new Dictionary<Vector3i, List<T>>();
             Indexer = new ScaleGridIndexer3() { CellSize = cellSize };
-            spinlock = new SpinLock();
+            //spinlock = new SpinLock();
             this.invalidValue = invalidValue;
         }
 
@@ -157,9 +157,9 @@ namespace g3
 
         void insert_point(T value, Vector3i idx, bool threadsafe = true)
         {
-            bool lockTaken = false;
-            while (threadsafe == true && lockTaken == false)
-                spinlock.Enter(ref lockTaken);
+            //bool lockTaken = false;
+            //while (threadsafe == true && lockTaken == false)
+            //    spinlock.Enter(ref lockTaken);
 
             List<T> values;
             if (Hash.TryGetValue(idx, out values)) {
@@ -168,16 +168,16 @@ namespace g3
                 Hash[idx] = new List<T>() { value };
             }
 
-            if (lockTaken)
-                spinlock.Exit();
+            //if (lockTaken)
+            //    spinlock.Exit();
         }
 
 
         bool remove_point(T value, Vector3i idx, bool threadsafe = true)
         {
-            bool lockTaken = false;
-            while (threadsafe == true && lockTaken == false)
-                spinlock.Enter(ref lockTaken);
+            //bool lockTaken = false;
+            //while (threadsafe == true && lockTaken == false)
+            //    spinlock.Enter(ref lockTaken);
 
             List<T> values;
             bool result = false;
@@ -185,8 +185,8 @@ namespace g3
                 result = values.Remove(value);
             }
 
-            if (lockTaken)
-                spinlock.Exit();
+            //if (lockTaken)
+            //    spinlock.Exit();
             return result;
         }
 

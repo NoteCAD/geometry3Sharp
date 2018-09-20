@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
+//using System.Threading;
 
 namespace g3
 {
@@ -14,23 +14,23 @@ namespace g3
     public class SafeListBuilder<T>
     {
         public List<T> List;
-        public SpinLock spinlock;
+        //public SpinLock spinlock;
 
         public SafeListBuilder()
         {
             List = new List<T>();
-            spinlock = new SpinLock();
+            //spinlock = new SpinLock();
         }
 
         public void SafeAdd(T value)
         {
-            bool lockTaken = false;
-            while (lockTaken == false)
-                spinlock.Enter(ref lockTaken);
+            //bool lockTaken = false;
+            //while (lockTaken == false)
+                //spinlock.Enter(ref lockTaken);
 
             List.Add(value);
 
-            spinlock.Exit();
+            //spinlock.Exit();
         }
 
         public List<T> Result {

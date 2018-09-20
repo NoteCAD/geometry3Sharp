@@ -194,16 +194,16 @@ namespace g3
 
 
         bool bParallel = false;
-        SpinLock hash_lock;
-        SpinLock mesh_lock;
+        //SpinLock hash_lock;
+        //SpinLock mesh_lock;
 
         /// <summary>
         /// processing z-slabs of cells in parallel
         /// </summary>
         void generate_parallel()
         {
-            hash_lock = new SpinLock();
-            mesh_lock = new SpinLock();
+            //hash_lock = new SpinLock();
+            //mesh_lock = new SpinLock();
             bParallel = true;
 
             // [TODO] maybe shouldn't alway use Z axis here?
@@ -322,9 +322,9 @@ namespace g3
         /// </summary>
         int find_or_append_vertex(ref Vector3d pos)
         {
-            bool lock_taken = false;
+            bool lock_taken = true;
             if ( bParallel ) {
-                hash_lock.Enter(ref lock_taken);
+                //hash_lock.Enter(ref lock_taken);
             }
 
             int vid;
@@ -333,8 +333,8 @@ namespace g3
                 VertexHash[pos] = vid;
             }
 
-            if (lock_taken)
-                hash_lock.Exit();
+            //if (lock_taken)
+                //hash_lock.Exit();
 
             return vid;
         }
@@ -346,15 +346,15 @@ namespace g3
         /// </summary>
         int append_vertex(Vector3d v)
         {
-            bool lock_taken = false;
-            if (bParallel) {
-                mesh_lock.Enter(ref lock_taken);
-            }
+            //bool lock_taken = false;
+            //if (bParallel) {
+               //mesh_lock.Enter(ref lock_taken);
+            //}
 
             int vid = Mesh.AppendVertex(v);
 
-            if (lock_taken)
-                mesh_lock.Exit();
+            //if (lock_taken)
+                //mesh_lock.Exit();
 
             return vid;
         }
@@ -366,15 +366,15 @@ namespace g3
         /// </summary>
         int append_triangle(int a, int b, int c)
         {
-            bool lock_taken = false;
-            if (bParallel) {
-                mesh_lock.Enter(ref lock_taken);
-            }
+            //bool lock_taken = false;
+            //if (bParallel) {
+            //    mesh_lock.Enter(ref lock_taken);
+            //}
 
             int tid = Mesh.AppendTriangle(a, b, c);
 
-            if (lock_taken)
-                mesh_lock.Exit();
+            //if (lock_taken)
+            //    mesh_lock.Exit();
 
             return tid;
         }

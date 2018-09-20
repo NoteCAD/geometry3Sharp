@@ -469,6 +469,7 @@ namespace g3
         /// <summary>
         /// Compress a byte buffer using Deflate/ZLib compression. 
         /// </summary>
+		/*
         static public byte[] CompressZLib(byte[] buffer, bool bFast)
         {
             MemoryStream ms = new MemoryStream();
@@ -485,6 +486,7 @@ namespace g3
             Buffer.BlockCopy(BitConverter.GetBytes(buffer.Length), 0, zBuffer, 0, 4);
             return zBuffer;
         }
+		*/
 
 
         /// <summary>
