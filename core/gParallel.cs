@@ -23,7 +23,7 @@ namespace g3
 #if G3_USING_UNITY && (NET_2_0 || NET_2_0_SUBSET)
             for_each<T>(source, body);
 #else
-            Parallel.ForEach<T>(source, body);
+            //Parallel.ForEach<T>(source, body);
 #endif
         }
 
